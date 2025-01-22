@@ -25,5 +25,19 @@ server.get("/custormers/:id", (req, res) => {
   return res.status(status).json(customer)
 })
 
+// Inserção de registro
+server.post("/custormers", (req, res) => {
+  const { name, site } = req.body;
+
+  // Verifica o próximo ID a ser inserido, pois os dados são mockados.
+  const nextId = customers[customers.length - 1].id + 1;
+
+  // Adiciona um novo customer na lista de objetos
+  const newCustomer = { id: nextId, name, site }
+  customers.push(newCustomer)
+
+  return res.status(201).json(newCustomer)
+})
+
 
 server.listen(3000);
