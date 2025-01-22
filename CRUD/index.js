@@ -39,5 +39,22 @@ server.post("/custormers", (req, res) => {
   return res.status(201).json(newCustomer)
 })
 
+// Atualização de registro
+server.put("/custormers/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, site } = req.body;
+
+  // Procura o index do id do customer
+  const index = customers.findIndex(item => item.id === id);
+
+  // Verifica se achou o index
+  const status = index >=0 ? 200 : 404;
+  if(index >= 0) {
+    customers[index] = { id: parseInt(id), name, site }
+  }
+
+  return res.status(status).json(customers[index])
+})
+
 
 server.listen(3000);
