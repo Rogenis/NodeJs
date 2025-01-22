@@ -6,7 +6,7 @@ server.use(express.json());
 let customers = [
   { id: 1, name: "Dev Samurai", site: "https//devsamurai.com.br" },
   { id: 2, name: "Google", site: "https//google.com.br" },
-  { id: 3, name: "Rógenis", site: "https//rogenis.com.br" }
+  { id: 3, name: "Ei Nerd", site: "https//einerd.com.br" }
 ]
 
 // Lista todos os custormers
@@ -48,7 +48,7 @@ server.put("/custormers/:id", (req, res) => {
   const index = customers.findIndex(item => item.id === id);
 
   // Verifica se achou o index
-  const status = index >=0 ? 200 : 404;
+  const status = index >= 0 ? 200 : 404;
   if(index >= 0) {
     customers[index] = { id: parseInt(id), name, site }
   }
@@ -56,5 +56,21 @@ server.put("/custormers/:id", (req, res) => {
   return res.status(status).json(customers[index])
 })
 
+// Deletar registro
+server.delete("/custormers/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  // Procura o index do id do customer
+  const index = customers.findIndex(item => item.id === id);
+
+  // Verifica se achou o index
+  const status = index >= 0 ? 200 : 404;
+
+  if(index >= 0) {
+    customers.splice(index, 1);
+  }
+
+  return res.status(status).json();
+})
 
 server.listen(3000);
